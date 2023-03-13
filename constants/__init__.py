@@ -21,4 +21,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 """
-from .constants import *
+from .constants import *  # noqa F403
+
+__all__ = ["*"]  # noqa F405

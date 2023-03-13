@@ -25,9 +25,8 @@ from core import CONFIG
 
 
 class ConstantsMeta(type):
-
     def __new__(mcs, name, bases, attrs):
-        if name == 'CONSTANTS':
+        if name == "CONSTANTS":
             return super().__new__(mcs, name, bases, attrs)
 
         try:
@@ -42,10 +41,10 @@ class ConstantsMeta(type):
         return super().__new__(mcs, name, bases, attrs)
 
     def __setattr__(self, attr, nv):
-        raise RuntimeError(f'Constant <{attr}> cannot be assigned to.')
+        raise RuntimeError(f"Constant <{attr}> cannot be assigned to.")
 
     def __delattr__(self, attr):
-        raise RuntimeError(f'Constant <{attr}> cannot be deleted.')
+        raise RuntimeError(f"Constant <{attr}> cannot be deleted.")
 
 
 class CONSTANTS(metaclass=ConstantsMeta):

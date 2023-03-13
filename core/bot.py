@@ -22,17 +22,17 @@ SOFTWARE.
 """
 import logging
 import pathlib
-import tomllib
 
 import aiohttp
 import asyncpg
 import discord
+import tomllib
 from discord.ext import commands
 
 from .logs import Handler
 
 
-with open('config.toml', 'rb') as fp:
+with open("config.toml", "rb") as fp:
     CONFIG = tomllib.load(fp)
 
 
@@ -40,9 +40,10 @@ logger: logging.Logger = logging.getLogger(__name__)
 
 
 class Bot(commands.Bot):
-
     # noinspection PyUnresolvedReferences,PyDunderSlots
-    def __init__(self, *, session: aiohttp.ClientSession, pool: asyncpg.Pool) -> None:
+    def __init__(
+        self, *, session: aiohttp.ClientSession, pool: asyncpg.Pool
+    ) -> None:
         intents: discord.Intents = discord.Intents.default()
         intents.message_content = True
         intents.members = True
@@ -50,16 +51,23 @@ class Bot(commands.Bot):
         self.session = session
         self.pool = pool
 
-        super().__init__(intents=intents, command_prefix=commands.when_mentioned_or('t! ', 't!'))
-        discord.utils.setup_logging(handler=Handler(level=CONFIG['LOGGING']['level']))
+        super().__init__(
+            intents=intents,
+            command_prefix=commands.when_mentioned_or("t! ", "t!"),
+        )
+        discord.utils.setup_logging(
+            handler=Handler(level=CONFIG["LOGGING"]["level"])
+        )
 
     async def setup_hook(self) -> None:
-
-        modules: list[str] = [f'{p.parent}.{p.stem}' for p in pathlib.Path('modules').glob('*.py')]
+        modules: list[str] = [
+            f"{p.parent}.{p.stem}"
+            for p in pathlib.Path("modules").glob("*.py")
+        ]
         for module in modules:
             await self.load_extension(module)
 
-        logger.info(f'Loaded ({len(modules)}) modules.')
+        logger.info(f"Loaded ({len(modules)}) modules.")
 
     async def on_ready(self) -> None:
-        logger.info(f'Logged in as {self.user} (ID: {self.user.id})')
+        logger.info(f"Logged in as {self.user} (ID: {self.user.id})")
