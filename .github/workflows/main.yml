@@ -1,0 +1,38 @@
+---
+name: Build
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.11"]
+
+    steps:
+      - id: checkout
+        name: Checkout
+        uses: actions/checkout@v3
+
+      - id: install-python
+        name: Install Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
+      - id: install-dependencies
+        name: Install dependencies
+        run: |
+          pip install -U pip
+          pip install -r requirements.txt
+
+      - id: test-tox
+        name: Test with tox
+        run: |
+          python -m pip install tox tox-gh-actions
+          tox

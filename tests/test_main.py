@@ -19,8 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
 """
-from .constants import *  # noqa F403
 
-__all__ = ["*"]  # noqa F405
+
+def test_main():
+    """Dummy tests function."""
+    meaning = 42
+    assert meaning == 42
